@@ -1122,9 +1122,13 @@ export default function Dashboard() {
   useEffect(() => {
     if (init.current) return;
     init.current = true;
-    WIDGET_CONFIGS.filter((c) => !c.static).forEach((c, i) =>
-      setTimeout(() => load(c), i * 5000)
-    );
+    const dynamic = WIDGET_CONFIGS.filter((c) => !c.static);
+    async function loadSequentially() {
+      for (const c of dynamic) {
+        await load(c);
+      }
+    }
+    loadSequentially();
   }, [load]);
 
   const render = (c: WidgetConfig) => {

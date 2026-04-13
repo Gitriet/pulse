@@ -1,6 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const maxDuration = 30;
+export const maxDuration = 60;
+
+async function callAnthropic(prompt: string, apiKey: string, retries = 4): Promise<Response> {
+  for (let attempt = 0; attempt < retries; attempt++) {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        tools: [{ type: "web_search_20250305", name: "web_search" }],
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+
+    if (response.status === 429) {
+      const retryAfter = response.headers.get("retry-after");
+      const wait = retryAfter ? parseInt(retryAfter) * 1000 : 5000 * (attempt + 1);
+      console.log(`Rate limited, waiting ${wait}ms (attempt ${attempt + 1}/${retries})`);
+      await new Promise((res) => setTimeout(res, wait));
+      continue;
+    }
+
+    return response;
+  }
+
+  return new Response("Rate limited after retries", { status: 429 });
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,20 +49,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        tools: [{ type: "web_search_20250305", name: "web_search" }],
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
+    const response = await callAnthropic(prompt, apiKey);
 
     if (!response.ok) {
       const errText = await response.text();
@@ -44,7 +62,6 @@ export async function POST(req: NextRequest) {
 
     const data = await response.json();
 
-    // Extract text blocks and parse JSON
     const fullText = (data.content || [])
       .filter((b: { type: string }) => b.type === "text")
       .map((b: { text: string }) => b.text)
