@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --dark: #0f1a0f;
-  --card: #172017;
-  --card-alt: rgba(200, 245, 64, 0.06);
-  --border: rgba(200, 245, 64, 0.08);
+  --dark: #1e2d1e;
+  --card: #2a3d2a;
+  --card-alt: rgba(200, 245, 64, 0.1);
+  --border: rgba(200, 245, 64, 0.14);
   --fg: #e8eee4;
   --text-sec: #9aaa8e;
   --muted: #586b50;
