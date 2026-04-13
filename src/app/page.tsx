@@ -186,9 +186,9 @@ function ISSWidget() {
     const cw = w / 2;
     const ch = ht / 2;
     ctx.clearRect(0, 0, cw, ch);
-    ctx.fillStyle = "rgba(200,245,64,0.04)";
+    ctx.fillStyle = "rgba(74,140,26,0.06)";
     ctx.fillRect(0, 0, cw, ch);
-    ctx.strokeStyle = "rgba(200,245,64,0.1)";
+    ctx.strokeStyle = "rgba(74,140,26,0.12)";
     ctx.lineWidth = 0.5;
     for (let i = 0; i <= 6; i++) {
       ctx.beginPath();
@@ -204,14 +204,14 @@ function ISSWidget() {
     }
     const x = ((parseFloat(pos.lng) + 180) / 360) * cw;
     const y = ((90 - parseFloat(pos.lat)) / 180) * ch;
-    ctx.fillStyle = "#c8f540";
-    ctx.shadowColor = "#c8f540";
+    ctx.fillStyle = "#4a8c1a";
+    ctx.shadowColor = "#4a8c1a";
     ctx.shadowBlur = 10;
     ctx.beginPath();
     ctx.arc(x, y, 4, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
-    ctx.strokeStyle = "rgba(200,245,64,0.5)";
+    ctx.strokeStyle = "rgba(74,140,26,0.5)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.arc(x, y, 9, 0, Math.PI * 2);

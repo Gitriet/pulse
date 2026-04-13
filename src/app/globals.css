@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --dark: #1e2d1e;
-  --card: #2a3d2a;
-  --card-alt: rgba(200, 245, 64, 0.1);
-  --border: rgba(200, 245, 64, 0.14);
-  --fg: #e8eee4;
-  --text-sec: #9aaa8e;
-  --muted: #586b50;
-  --lime: #c8f540;
-  --lime-dim: #a8d030;
-  --taupe: #b8a88a;
-  --red: #ef6b5b;
+  --dark: #e8f0e8;
+  --card: #f2f7f2;
+  --card-alt: rgba(100, 140, 40, 0.07);
+  --border: rgba(100, 140, 40, 0.15);
+  --fg: #1a2e1a;
+  --text-sec: #4a5e44;
+  --muted: #7a8e74;
+  --lime: #4a8c1a;
+  --lime-dim: #3a7010;
+  --taupe: #8a7a5a;
+  --red: #d44030;
 }
 
 body {
@@ -112,8 +112,8 @@ body {
 }
 
 .card:hover {
-  border-color: rgba(200, 245, 64, 0.2);
-  box-shadow: 0 4px 30px rgba(200, 245, 64, 0.06);
+  border-color: rgba(74, 140, 26, 0.3);
+  box-shadow: 0 4px 30px rgba(74, 140, 26, 0.08);
   transform: translateY(-2px);
 }
 
@@ -254,7 +254,7 @@ body {
 }
 
 .notes-area:focus {
-  border-color: rgba(200, 245, 64, 0.3);
+  border-color: rgba(74, 140, 26, 0.3);
 }
 
 .notes-area::placeholder {
@@ -275,7 +275,7 @@ body {
 }
 
 .btn-retry:hover {
-  background: rgba(200, 245, 64, 0.1);
+  background: rgba(74, 140, 26, 0.1);
   border-color: var(--lime);
 }
 
@@ -292,7 +292,7 @@ body {
 
 .btn-pomo:hover {
   border-color: var(--lime);
-  background: rgba(200, 245, 64, 0.08);
+  background: rgba(74, 140, 26, 0.08);
 }
 
 /* Loader */
@@ -331,6 +331,6 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(200, 245, 64, 0.15);
+  background: rgba(74, 140, 26, 0.2);
   border-radius: 3px;
 }
