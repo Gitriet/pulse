@@ -36,7 +36,7 @@ const WIDGET_CONFIGS: WidgetConfig[] = [
 /* ─── API Helpers ─── */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function fetchWidgetData(prompt: string, retries = 3): Promise<any | null> {
+async function fetchWidgetData(prompt: string, retries = 5): Promise<any | null> {
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
       const r = await fetch("/api/widget", {
@@ -45,7 +45,7 @@ async function fetchWidgetData(prompt: string, retries = 3): Promise<any | null>
         body: JSON.stringify({ prompt }),
       });
       if (r.status === 429) {
-        await new Promise((res) => setTimeout(res, 2000 * (attempt + 1)));
+        await new Promise((res) => setTimeout(res, 3000 * (attempt + 1)));
         continue;
       }
       if (!r.ok) throw new Error(`API ${r.status}`);
@@ -53,7 +53,7 @@ async function fetchWidgetData(prompt: string, retries = 3): Promise<any | null>
     } catch (err) {
       console.error("Widget fetch error:", err);
       if (attempt < retries - 1) {
-        await new Promise((res) => setTimeout(res, 2000 * (attempt + 1)));
+        await new Promise((res) => setTimeout(res, 3000 * (attempt + 1)));
       }
     }
   }
@@ -1123,7 +1123,7 @@ export default function Dashboard() {
     if (init.current) return;
     init.current = true;
     WIDGET_CONFIGS.filter((c) => !c.static).forEach((c, i) =>
-      setTimeout(() => load(c), i * 3000)
+      setTimeout(() => load(c), i * 5000)
     );
   }, [load]);
 
